@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<root version="3.3">
+	<properties>
+		<name>Feature: Evo's SFRPG Effect Tinkering</name>
+		<author>Evolivolution</author>
+		<version>2.0</version>
+		<ruleset>
+			<name>SFRPG</name>
+		</ruleset>
+	</properties>
+	<announcement text="Feature: Evo's SFRPG Effect Tinkering v2.0" font="emotefont"/>
+	<base>
+		<script name="BetterRegen" file="scripts/better_regen.lua" />
+		<script name="Fortification" file="scripts/fortification.lua" />
+	</base>
+</root>
