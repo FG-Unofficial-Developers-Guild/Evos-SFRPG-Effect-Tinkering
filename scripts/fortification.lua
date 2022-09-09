@@ -10,24 +10,26 @@ end
 function onAttackResolve(rSource, rTarget, rRoll, rMessage)
 	originalonAttackResolve(rSource, rTarget, rRoll, rMessage);
 
-	local rEffectComp = EffectManagerSFRPG.getEffectsByType(rTarget, "FORT");
-	local nHighestMod = 0;
-	for i,effect in ipairs(rEffectComp) do
-		rEffectComp.type = effect.type;
-		if effect.mod > nHighestMod then
-			nHighestMod = effect.mod
+	if rRoll.sResult == "crit" then
+		local rEffectComp = EffectManagerSFRPG.getEffectsByType(rTarget, "FORT");
+		local nHighestMod = 0;
+		for i,effect in ipairs(rEffectComp) do
+			rEffectComp.type = effect.type;
+			if effect.mod > nHighestMod then
+				nHighestMod = effect.mod
+			end
 		end
-	end
 
-	if rRoll.sResult == "crit" and rEffectComp.type == "FORT" then
-		rRoll.nFortificationChance = nHighestMod;
-		
-		table.insert(rRoll.aMessages, "[FORTIFICATION " .. rRoll.nFortificationChance .. "%]");
-		
-		local aFortificationChanceDice = { "d100" };
-		local rFortificationChanceRoll = { sType = "fortification", sDesc = rRoll.sDesc .. "[FORTIFICATION CHANCE " .. rRoll.nFortificationChance .. "%]", aDice = aFortificationChanceDice, nMod = 0 };
-		
-		ActionsManager.roll(rSource, rTarget, rFortificationChanceRoll);
+		if rEffectComp.type == "FORT" then
+			rRoll.nFortificationChance = nHighestMod;
+			
+			table.insert(rRoll.aMessages, "[FORTIFICATION " .. rRoll.nFortificationChance .. "%]");
+			
+			local aFortificationChanceDice = { "d100" };
+			local rFortificationChanceRoll = { sType = "fortification", sDesc = rRoll.sDesc .. "[FORTIFICATION CHANCE " .. rRoll.nFortificationChance .. "%]", aDice = aFortificationChanceDice, nMod = 0 };
+			
+			ActionsManager.roll(rSource, rTarget, rFortificationChanceRoll);
+		end
 	end
 end
 
